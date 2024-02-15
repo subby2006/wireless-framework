@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!-- most unoptimized remote control ever-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocketIO</title>
+    <link rel="stylesheet" href="all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .large-button {
+            font-size: 200px;
+            padding: 16px 32px;
+        }
+        #throttleInput {
+            writing-mode: bt-lr;
+            writing-mode: vertical-lr;
+            height: 200px;
+            transform: scaleY(-1);
+        }
+    </style>
+</head>
+<body>
+    <input type="range" id="throttleInputLeft" orient="vertical" min="0" max="1024" value="50">
+    <input type="range" id="throttleInputRight" orient="vertical" min="0" max="1024" value="50">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        var socket = io();
+
+        // Handle button click events
+        /* document.getElementById('upButton').addEventListener('click', function() {
+            socket.emit('up_button');
+        });
+
+        document.getElementById('downButton').addEventListener('click', function() {
+            socket.emit('down_button');
+        });
+
+        document.getElementById('stopButton').addEventListener('click', function() {
+            socket.emit('stop_button');
+        }); */
+        
+        var throttleInputLeft = document.getElementById('throttleInputLeft');
+        var throttleInputRight = document.getElementById('throttleInputRight');
+        
+        throttleInputLeft.addEventListener('input', function() {
+            console.log('L' + throttleInputLeft.value);
+            socket.emit('throttle_data_left', throttleInputLeft.value);
+        })
+
+        throttleInputRight.addEventListener('input', function() {
+            console.log('R' + throttleInputRight.value);
+            socket.emit('throttle_data_right', throttleInputRight.value);
+        })
+
+    </script>
+</body>
+</html>
